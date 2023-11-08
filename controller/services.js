@@ -11,6 +11,14 @@ const getServices = async (req, res) => {
   res.send(result);
 };
 
+const getService = async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const servicesCollection = await getDb().collection("services");
+  const result = await servicesCollection.findOne(query);
+  res.send(result);
+};
+
 const setService = async (req, res) => {
   const service = req.body;
   const servicesCollection = await getDb().collection("services");
@@ -44,4 +52,10 @@ const deleteService = async (req, res) => {
   res.send(result);
 };
 
-module.exports = { getServices, setService, updateService, deleteService };
+module.exports = {
+  getServices,
+  setService,
+  updateService,
+  deleteService,
+  getService,
+};
