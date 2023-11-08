@@ -6,7 +6,7 @@ const {
   deleteService,
   getService,
 } = require("../controller/services");
-const { getBookings } = require("../controller/bookings");
+const { getBookings, setBooking } = require("../controller/bookings");
 
 const router = express.Router();
 
@@ -19,5 +19,6 @@ router.delete("/services/:id", deleteService);
 
 // bookings CRUD
 router.get("/bookings", getBookings);
+router.post("/bookings", setBooking);
 
 module.exports = { express, router };
