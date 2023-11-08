@@ -6,4 +6,11 @@ const getServices = async (req, res) => {
   res.send(result);
 };
 
-module.exports = { getServices };
+const setService = async (req, res) => {
+  const service = req.body;
+  const servicesCollection = await getDb().collection("services");
+  const result = await servicesCollection.insertOne(service);
+  res.send(result);
+};
+
+module.exports = { getServices, setService };
