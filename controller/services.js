@@ -36,4 +36,12 @@ const updateService = async (req, res) => {
   res.send(result);
 };
 
-module.exports = { getServices, setService, updateService };
+const deleteService = async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const servicesCollection = await getDb().collection("services");
+  const result = await servicesCollection.deleteOne(query);
+  res.send(result);
+};
+
+module.exports = { getServices, setService, updateService, deleteService };
