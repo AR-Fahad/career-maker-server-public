@@ -1,3 +1,4 @@
+const express = require("express");
 const {
   getServices,
   setService,
@@ -26,4 +27,4 @@ router.get("/bookings", verifyToken, getBookings);
 router.post("/bookings", verifyToken, setBooking);
 router.patch("/bookings/:id", verifyToken, updateBooking);
 
-module.exports = { express, router };
+module.exports = { router };
