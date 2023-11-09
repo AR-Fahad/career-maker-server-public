@@ -2,12 +2,19 @@ const { ObjectId } = require("mongodb");
 const { getDb } = require("../db/db");
 
 const getBookings = async (req, res) => {
+  if (
+    req.query?.u !== req.decoded.email &&
+    req.query?.p !== req.decoded.email
+  ) {
+    return res.status(403).send("forbidden");
+  }
+
   let query = {};
-  if (req?.query?.u) {
+  if (req.query?.u) {
     query = { user: req.query.u };
   }
 
-  if (req?.query?.p) {
+  if (req.query?.p) {
     query = { provider: req.query.p };
   }
   const bookingsCollection = await getDb().collection("bookings");
