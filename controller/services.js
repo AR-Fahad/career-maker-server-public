@@ -2,9 +2,15 @@ const { ObjectId } = require("mongodb");
 const { getDb } = require("../db/db");
 
 const getServices = async (req, res) => {
+  const filter = req.query;
   let query = {};
-  if (req?.query?.email) {
+  if (filter?.email) {
     query = { provider_email: req.query.email };
+  }
+  if (filter?.search) {
+    query = {
+      service_name: { $regex: filter.search, $options: "i" },
+    };
   }
   const servicesCollection = await getDb().collection("services");
   const result = await servicesCollection.find(query).toArray();

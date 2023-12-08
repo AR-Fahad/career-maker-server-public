@@ -4,6 +4,7 @@ const { connectToDatabase } = require("./db/db");
 const { router } = require("./routes/routes");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const { logger } = require("./middleware/verifyToken");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -11,7 +12,10 @@ const port = process.env.PORT || 5000;
 // middlewares
 app.use(
   cors({
-    origin: ["https://rococo-cocada-6bff95.netlify.app"],
+    origin: [
+      "https://rococo-cocada-6bff95.netlify.app",
+      "http://localhost:5173",
+    ],
     credentials: true,
   })
 );
@@ -20,7 +24,7 @@ app.use(cookieParser());
 
 connectToDatabase()
   .then(() => {
-    app.post("/jwt", async (req, res) => {
+    app.post("/jwt", logger, async (req, res) => {
       const user = req.body;
       console.log(user);
       const token = jwt.sign(user, process.env.JWT_TOKEN, {

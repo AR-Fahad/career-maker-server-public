@@ -1,5 +1,10 @@
 const jwt = require("jsonwebtoken");
 
+exports.logger = async (req, res, next) => {
+  console.log("called", req.method, req.hostname, req.url);
+  next();
+};
+
 exports.verifyToken = async (req, res, next) => {
   const token = req?.cookies?.access_token;
   if (!token) {
